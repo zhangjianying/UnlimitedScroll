@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, target-densitydpi=medium-dpi, user-scalable=no" />
+	<meta content="telephone=no" name="format-detection" />
+	<link href="MyFrameWork.css" rel="stylesheet" media="screen">
+		<script type="text/javascript" src="jquery-1.9.0.min.js"></script>
+		<script type="text/javascript" src="iscroll.js"></script>
+		<script type="text/javascript" src="UnlimitedScroll.js"></script>
+	
+	<style>
+		body {
+			min-width: 320px;
+			width: 100%;
+			height: 100%; 
+			overflow: hidden; 
+		}
+
+		* {
+			-webkit-touch-callout: none; 
+			-webkit-text-size-adjust: none; 
+			-webkit-user-select: none; 
+			-webkit-font-smoothing: none;
+			-webkit-font-kerning :none;
+		}
+		.ScrollPageWrapper{
+			width:90%;
+			height:400px;
+			border:1px solid #000;
+			position: absolute;
+			overflow: hidden;
+		}
+
+		.ScrollPageContent{
+			position: absolute;
+			top:0;
+			left:0;
+			width:100%;
+		}
+
+		.ScrollPageContent div{
+			background: #eee;
+			position: absolute;
+			top:0;
+			width:100%;
+			word-wrap: break-word; 
+			word-break:break-all;
+			line-height: 25px;
+			box-shadow: 0px 0px 0px 1px #666 inset;
+		}
+	
+		.myScrollbarH > div {
+			height:100%;
+		}
+		/**
+		 *
+		 * Vertical Scrollbar
+		 *
+		 */
+		.myScrollbarV {
+			position:absolute;
+			z-index:100;
+			width:7px;bottom:7px;top:2px;right:1px
+		}
+
+		.myScrollbarV > div {
+			width:100%;
+		}
+
+
+		/**
+		 *
+		 * Both Scrollbars
+		 *
+		 */
+		.myScrollbarH > div,
+		.myScrollbarV > div {
+			position:absolute;
+			z-index:100;
+
+			/* The following is probably what you want to customize */
+			-webkit-box-sizing:border-box;
+			-moz-box-sizing:border-box;
+			-o-box-sizing:border-box;
+			box-sizing:border-box;
+
+			border-width:3px;
+			-webkit-border-image:url(scrollbar.png) 6 6 6 6;
+			-moz-border-image:url(scrollbar.png) 6 6 6 6;
+			-o-border-image:url(scrollbar.png) 6 6 6 6;
+			border-image:url(scrollbar.png) 6 6 6 6;
+		}
+
+	
+	</style>
+</head>
+<body>
+	<div class="ScrollPageWrapper">
+		<div class="ScrollPageContent">	
+		</div>
+		
+	</div>
+
+	<script>
+
+	$(function(){
+		new UnlimitedScroll($('.ScrollPageWrapper'),
+		{
+			num:10,
+			getData:function(index){
+				//后台传递数据方法
+				var arr = [];
+				var end = 0;
+				var k = 0;
+
+				
+				s = index;
+				var e = s + 250;
+
+				for(i=s;i<e;i++){
+					arr[k] = '【'+i+'】';
+					
+
+					for(j=0;j<=end;j++){
+						arr[k]+= '&&'+Math.random();
+					}
+
+					end++;
+					if(end%10 == 0){
+						end = 0;
+					}
+					k++;
+				}
+
+				return {
+					isEnd:0,
+					arr:arr
+				};
+			},
+			initItem:function(item){
+				//初始化ITEM样式
+				var item = $('<div>'+item+'</div>');
+				return item;
+			}			
+		});			
+	});
+	
+	</script>
+</body>
+</html>
